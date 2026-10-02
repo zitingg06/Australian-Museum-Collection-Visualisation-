@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Data Visualisation</title>
+
+    <!-- Import Pure.css library, allow stacked of elements when screen size is small-->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/purecss@3.0.0/build/pure-min.css" integrity="sha384-X38yfunGUhNzHpBaEBsWLO+A0HDYOQi8ufWDkZ0k9e0eXz/tH3II7uKZ9msv++Ls" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/purecss@3.0.0/build/grids-responsive-min.css">
+
+
+    <!-- Import Google Font-->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/vega@5.20.2"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vega-lite@5.1.0"></script>
+
+    <!-- Embedd Vegalite File-->
+    <script src="https://cdn.jsdelivr.net/npm/vega-embed@6.17.0"></script>
+
+    <!-- Embedd CSS File-->
+    <link rel="stylesheet" href="css/layout.css">
+
+
+</head>
+
+<body>
+    <!-- HEADER: full-width gold bar-->
+    <div class="header">
+
+        <!-- INNER BOX: keeps the content centered and holds 3 boxed side-by-side -->
+        <div class="header-inner">
+            
+            <!-- Box 1: flag + title + subtitle -->
+            <div class="header-inner-left">
+                <span class="flag">🇦🇺</span>
+                <div>
+                    <h1>AUSTRALIAN COLLECTIBLES</h1>
+                    <p>DATA VISUALIZATIONS</p>
+                </div>
+            </div>
+
+            <!-- Box 2: 4 links to each sections -->
+            <div class="header-inner-middle">
+                <a href="#provenance">1. Spatial</a>
+                <a href="#temporal">2. Category</a>
+                <a href="#era-analysis">3. Eras</a>
+                <a href="#correlations">4. Mintage & Value</a>
+            </div>
+
+            <!-- Box 3: link to the visualization part -->
+            <a href="#provenance" class="button">EXPLORE VISUALIZATION ↓</a>
+        </div>
+    </div>
+
+
+
+    <!-- SUB-HEADER: Introduction to Australian Collectibles -->
+    <div class="sub-header">
+        <!-- LEFT SUB-HEADER -->
+        <div class="sub-header-left">
+            <h1>Treasures of the Commonwealth: Australia's Collecting Story.</h1>
+            <p> An empirical investigation into national heritage collections,
+                commemorative coinage, postal stamp issues, and colonial trade tokens.
+                Driven by clean, structured data from the <b>National Museum of Australia (NMA) Collection API</b>
+                and <b>Royal Australian Mint (RAM)</b> archives spanning 1788 to 2026.
+            </p>
+        </div>
+
+        <!-- RIGHT SUB-HEADER -->
+        <div class="sub-header-right">
+            <div class="arch-card">
+                <div class="icon-circle">
+                    <img src="coins.png" class="arch-img">
+                </div>
+                <h2> NMA & RAM Collections </h2>
+                <p>Analysing physical objects, materials, production locations, mintages, and historical themes across pre-federation, decimal, and contemporary eras.</p>
+                <a href="#provenance" class="button">VIEW CHARTS & DATA</a>
+            </div>
+        </div>
+    </div>
+
+
+
+    <!-- KPI CARD-->
+    <div class="pure-g kpi-card">
+        <div class="pure-u-1-3 pure-u-md-1-3">
+            <div class="stats-box">
+                <h2 class="stats-number">12</h2>
+                <h2 class="stats-label">Interactive Visualizations</h2>
+            </div>
+        </div>
+
+        <div class="pure-u-1-3 pure-u-md-1-3">
+            <div class="stats-box">
+                <h2 class="stats-number">3</h2>
+                <h2 class="stats-label">Spatial & Flow (Map) Idioms</h2>
+            </div>
+        </div>
+
+        <div class="pure-u-1-3 pure-u-md-1-3">
+                <div class="stats-box">
+                <h2 class="stats-number">8</h2>
+                <h2 class="stats-label"> Eras (1788 - Present)</h2>
+            </div>
+        </div>
+    </div>
+
+
+
+    <!-- SECTION 1: CHART & TEXT-->
+    <div class="section" id="provenance">
+        
+        <!-- text -->
+        <h1 class="section-title">1. Geographic & Spatial Provenance </h1>
+        <p class="section-text">Mapping where items were made, collected, and moved across Australia and trade routes.</p>
+
+        <!-- top chart -->
+        <div class="pure-g chart-row">
+            <div class="pure-u-1 pure-u-md-1-2">
+                <div class="chart-card">
+                    <!-- chart 1 -->
+                    <div class="chart-header">
+                        <h3 class="chart-title">Choropleth Map: Collectibles Production State</h3>
+                        <span class="chart-tag">Map #1</span>     
+                    </div> 
+                    <p class="chart-text">Each state's share of Australian production-place records in the NMA collection. Darker blue means a larger share.</p> 
+                    <div class="chart" id="vis1"></div>         
+                </div>
+            </div>
+        
+            <div class="pure-u-1 pure-u-md-1-2">
+                <div class="chart-card">
+                    <!-- chart 2 -->
+                    <div class="chart-header">
+                        <h3 class="chart-title">Proportional Symbol Map: Collectibles Production Hubs Across Australia</h3>
+                        <span class="chart-tag">Map #2</span>     
+                    </div> 
+                    <p class="chart-text">Recorded production places in Australia, sized by the number of NMA records linked to each place. Larger circles mean more records.</p> 
+                    <div class="chart" id="vis2"></div>         
+                </div>
+            </div>
+        </div>
+
+        <!-- bottom chart -->
+        <div class="pure-g chart-row">
+            <div class="pure-u-1">
+                <div class="chart-card">
+                    <!-- chart 3 -->
+                    <div class="chart-header">
+                        <h3 class="chart-title">Flow Map: Overseas Origins Flowing to Canberra</h3>
+                        <span class="chart-tag">Map #3</span>     
+                    </div> 
+                    <p class="chart-text">Overseas places where Asutralia's Collectibles were made, connected to the museum's collection in Canberra. Thicker lines mean more records. Lines show links, not real shipping routes.</p> 
+                    <div class="chart" id="vis3"></div>         
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <!-- SECTION 2: CHART & TEXT-->
+    <div class="section" id="temporal">
+        
+        <!-- text -->
+        <h1 class="section-title">2. Collection and Commemorative Profiles</h1>
+        <p class="section-text">Tracking category evolution, collection proportions, and multi-variable parallel flows across historical eras.</p>
+
+        
+        <!-- top chart -->
+        <div class="pure-g chart-row">
+            <div class="pure-u-1 pure-u-md-1-2">
+                <!-- chart 4 -->
+                <div class="chart-card">
+                    <div class="chart-header">
+                        <h3 class="chart-title">Radial Donut: NMA Collection Category Composition</h3>
+                        <span class="chart-tag">Advanced #1</span>     
+                    </div> 
+                    <p class="chart-text">Proportional share of primary category groups in the NMA digitized collectibles catalog.</p> 
+                    <div class="chart" id="vis4"></div>         
+                </div>
+            </div>
+        
+            <div class="pure-u-1 pure-u-md-1-2">
+                <div class="chart-card">
+                    <!-- chart 5 -->
+                    <div class="chart-header">
+                        <h3 class="chart-title">Heatmap: Collectibles by Material and Category</h3>
+                        <span class="chart-tag">Advance #2</span>     
+                    </div> 
+                    <p class="chart-text">Percentage of materials used across different collectible categories</p> 
+                    <div class="chart" id="vis5"></div>         
+                </div>
+            </div>
+        </div>
+
+        <!-- bottom chart -->
+        <div class="pure-g chart-row">
+            <div class="pure-u-1 pure-u-md-1-2">
+                <div class="chart-card">
+                    <!-- chart 6 -->
+                    <div class="chart-header">
+                        <h3 class="chart-title">Diverging Bar Chart: Commemorative Themes Across Coins and Stamps</h3>
+                        <span class="chart-tag">Advance #3</span>     
+                    </div> 
+                    <p class="chart-text">Share of coin and stamp issues within each theme.</p> 
+                    <div class="chart" id="vis6"></div> 
+                </div>
+            </div>
+        
+            <div class="pure-u-1 pure-u-md-1-2">
+                <div class="chart-card">
+                    <!-- chart 7 -->
+                    <div class="chart-header">
+                        <h3 class="chart-title">Treemap: Curatorial Collections by Group</h3>
+                        <span class="chart-tag">Advance #4</span>     
+                    </div> 
+                    <p class="chart-text">Record the curatorial collection by each group.</p> 
+                    <div class="chart" id="vis7"></div>         
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <!-- SECTION 3: CHART & TEXT-->
+    <div class="section" id="era-analysis">
+        
+        <!-- text -->
+        <h1 class="section-title">3. Change Across Time and Eras</h1>
+        <p class="section-text">Evaluating mint volume matrices, hierarchical museum collections, and era composition shifts using empirical data.</p>
+
+        <!-- top chart -->
+        <div class="pure-g chart-row">
+
+            <div class="pure-u-1 pure-u-md-1-2">
+                <div class="chart-card">
+                    <!-- chart 8 -->
+                    <div class="chart-header">
+                        <h3 class="chart-title">Streamgraph: Collectible Category Growth</h3>
+                        <span class="chart-tag">Advance #5</span>     
+                    </div> 
+                    <p class="chart-text">Volume of recorded collectible categories shifted over time (1800–2025).</p> 
+                    <div class="chart" id="vis8"></div>          
+                </div>
+            </div>
+
+            <div class="pure-u-1 pure-u-md-1-2">
+                <div class="chart-card">
+                    <!-- chart 9 -->
+                    <div class="chart-header">
+                        <h3 class="chart-title">Diverging Bar Chart: Era Compositional Shift</h3>
+                        <span class="chart-tag">Advance #6</span>     
+                    </div> 
+                    <p class="chart-text">Comparative category shares before 1901 <b>(pre-federation)</b> and from 1966 onward <b>(modern-collection)</b>.</p> 
+                    <div class="chart" id="vis9"></div>         
+                </div>
+            </div>
+        
+        </div>
+
+        <!-- bottom chart -->
+        <div class="pure-g chart-row">
+            <div class="pure-u-1 pure-u-md-1-2">
+                <div class="chart-card">
+                    <!-- chart 10 -->
+                    <div class="chart-header">
+                        <h3 class="chart-title">Jitter Plot: Commemorative Issues Across Themes and Time</h3>
+                        <span class="chart-tag">Advance #7</span>     
+                    </div> 
+                    <p class="chart-text">Shows when commemorative coins and stamps were issued across themes.</p> 
+                    <div class="chart" id="vis10"></div>         
+                </div>
+            </div>
+            <div class="pure-u-1 pure-u-md-1-2">
+                <div class="chart-card">
+                    <!-- chart 11 -->
+                    <div class="chart-header">
+                        <h3 class="chart-title">Bump Chart: Category Popularity Ranks Across Eras</h3>
+                        <span class="chart-tag">Advance #8</span>     
+                    </div> 
+                    <p class="chart-text">Observe how museum collecting changed over time across different periods of Australian history.</p> 
+                    <div class="chart" id="vis11"></div>  
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+     <!-- SECTION 4: CHART & TEXT-->
+    <div class="section" id="correlations">
+        
+        <!-- text -->
+        <h1 class="section-title">4. Mintage and Theme</h1>
+        <p class="section-text">Analyzing mintage dispersion across coin denominations and tracking long-term shifts in institutional collecting priorities.</p>
+
+        <div class="pure-g chart-row">
+            <div class="pure-u-1">
+                <div class="chart-card">
+                    <!-- chart 12 -->
+                    <div class="chart-header">
+                        <h3 class="chart-title">Scatterlpot: Coin Mintage Over Time by Commemorative Theme</h3>
+                        <span class="chart-tag">Basic #1</span>     
+                    </div> 
+                    <p class="chart-text">Shows volume across different commemorative themes with a line shows the overall trend.</p> 
+                    <div class="chart" id="vis12"></div>  
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <!-- FLOW -->
+    <div class="flow-card">
+        <h2 class="flow-title"> The Heritage Balance </h2>
+        <div class="flow-inner">
+            <span class="flow-pill">1. ORIGIN</span>
+            <span class="arrow">➔</span>
+            <span class="flow-pill">2. ACQUISITION</span>
+            <span class="arrow">➔</span>
+            <span class="flow-pill">3. CATEGORISATION</span>
+            <span class="arrow">➔</span>
+            <span class="flow-pill">4. CONSERVATION</span>
+            <span class="arrow">➔</span>
+            <span class="flow-pill current">5. NATIONAL IDENTIFY</span>
+        </div>
+    </div>
+
+
+    
+    <!-- FOOTER -->
+    <div class="footer-card">
+        <div class="footer-text">
+            <h2>PRESERVE THE PAST. EXPLORE THE PRESENT. VALUE THE STORY.</h2>
+            <p><b>Author</b>: ZI TING MOW © 2026.</p>
+            <p><b>Data source</b>: National Museum of Australia Collection API. Data retrieved September 2026. This visualisation was developed using the National Museum of Australia's Collection API.</p> 
+            <p>
+                <b>Explore NMA and RAM Collections online:</b>
+                <a href="https://www.nma.gov.au/explore/collection"> NMA API Explorer</a> |
+                <a href="https://www.ramint.gov.au/collect"> RAM Explorer</a>
+            </p>     
+        </div>
+         <a href="#" class="back-button">BACK TO TOP ↑</a>       
+    </div>
+
+    
+    <script type="text/javascript">
+        var vg_1 ="js/01_choroplethmap.vg.json"
+        vegaEmbed("#vis1", vg_1, { "actions": false }).then(function(result) {}).catch(console.error)
+
+        var vg_2 ="js/02_proportionalmap.vg.json"
+        vegaEmbed("#vis2", vg_2, { "actions": false }).then(function(result) {}).catch(console.error)
+
+        var vg_3 ="js/03_flowmap.vg.json"
+        vegaEmbed("#vis3", vg_3, { "actions": false }).then(function(result) {}).catch(console.error)
+
+        var vg_4 ="js/04_donutchart.vg.json"
+        vegaEmbed("#vis4", vg_4, { "actions": false }).then(function(result) {}).catch(console.error)
+
+        var vg_5 ="js/05_heatmap.vg.json"
+        vegaEmbed("#vis5", vg_5, { "actions": false }).then(function(result) {}).catch(console.error)
+
+        var vg_6 ="js/06_butterflychart.vg.json"
+        vegaEmbed("#vis6", vg_6, { "actions": false }).then(function(result) {}).catch(console.error)
+
+        var vg_7 ="js/07_treemap.vg.json"
+        vegaEmbed("#vis7", vg_7, { "actions": false }).then(function(result) {}).catch(console.error)
+
+        var vg_8 ="js/08_streamgraph.vg.json"
+        vegaEmbed("#vis8", vg_8, { "actions": false }).then(function(result) {}).catch(console.error)
+
+        var vg_9 ="js/09_divergingbar.vg.json"
+        vegaEmbed("#vis9", vg_9, { "actions": false }).then(function(result) {}).catch(console.error)
+
+        var vg_10 ="js/10_jitterplot.vg.json"
+        vegaEmbed("#vis10", vg_10, { "actions": false }).then(function(result) {}).catch(console.error)
+
+        var vg_11 ="js/11_bumpchart.vg.json"
+        vegaEmbed("#vis11", vg_11, { "actions": false }).then(function(result) {}).catch(console.error)
+
+        var vg_12 ="js/12_scatterplot.vg.json"
+        vegaEmbed("#vis12", vg_12, { "actions": false }).then(function(result) {}).catch(console.error)
+    </script>
+</body>
+</html>
+
+
