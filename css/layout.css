@@ -1,0 +1,452 @@
+/* ============================================================
+    WHOLE PAGE
+============================================================ */
+*, *::before, *::after{      /* apply box-sizing to all element, prevent overflow */
+    box-sizing: border-box;
+}
+
+
+html, body{
+    width: 100%;                /* make the page take full screen width */
+    margin: 0;                  /* remove default outer spacing */
+    padding: 0;                 /* remove default inner spacing */
+}
+
+body {
+    font-family: "Plus Jakarta Sans", Arial;
+    color: #0A1E5C;
+    line-height: 1.5;
+    background-color: #FAF6EC;
+    margin: 0 auto;
+    max-width: 100%;
+}
+
+
+/* ============================================================
+   HEADER
+============================================================ */
+.header {
+    border-bottom: 3px solid #0D2B80;
+    background-color: #FFECB3;
+    position: sticky;                      /* make the header fix when scrolling */
+    top: 0;                                /* stick header at the very top of the screen */   
+    z-index:1000;                          /* place header above the page content so the chart don't cover it */
+}
+
+.header-inner {
+    display: flex;   
+    flex-wrap: wrap;                       /* drop each sections to next line when full */
+    justify-content: space-evenly;         /* distribute the 3 sections evenly */
+    align-items: center;
+    gap: 30px;
+    width: 100%;
+    padding: 10px 20px;
+}
+
+
+/* ---------- Left flag + title ---------- */
+.header-inner-left {
+    display: flex;
+    align-items: center;
+}
+
+.flag{
+    font-size: 40px;
+    padding-right: 20px;
+}
+
+.header-inner-left h1 {
+    font-family: "Playfair Display", serif;
+    font-size: 20px;
+    font-weight: bold;
+    color: #0D2B80;
+    line-height: 0%;
+}
+
+.header-inner-left p {
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 1px;
+  color: rgba(13, 43, 128, 0.8);
+}
+
+
+/* ---------- Middle: 4 links to visualizations ---------- */
+.header-inner-middle {
+    display: flex;            
+    gap: 30px;
+}
+
+.header-inner-middle a {
+    font-size: 14px;                      
+    font-weight: 600;
+    letter-spacing: 1px;                
+    color: #0D2B80;  
+    text-decoration: none;   /* remove the underline on link */
+    padding-left: 5px;
+    display: inline-block;
+    padding: 8px 14px;
+    border-radius: 8px;
+    white-space: nowrap;
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.header-inner-middle a:hover,
+.header-inner-middle a:focus-visible {
+    background-color: #0D2B80;
+    color: #FFFFFF;
+}
+
+
+/* ---------- Right: Navy Button link to visualization ---------- */
+.button, .back-button{
+    font-family: "Plus Jakarta Sans", sans-serif;
+    font-size: 12px;
+    font-weight: bold;
+    color: #FFFFFF;
+    text-align: center;
+    text-decoration: none;
+    letter-spacing: 1px;
+    border-radius: 30px;
+    box-shadow: 3px 3px 0px #FFD54F;    /* gold shadow at the bottom right */
+    background-color: #0D2B80;
+    padding: 9px 20px;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    white-space: nowrap;
+    transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease,
+}
+
+.button:hover, .back-button:hover {
+    background-color: #1034A6;
+    transform: translateY(2px);
+    box-shadow: 4px 5px 0 #FFD54F;      /* bring down animation when hover to the button */
+}
+
+
+
+/* ============================================================
+   SUB-HEADER SECTION
+============================================================ */
+/* ---------- SUB-HEADER: two columns ---------- */
+.sub-header {
+    display:flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 50px;
+    margin: 0 auto;
+    padding: 40px 40px;  
+    width: 100%;
+}
+
+.sub-header-left {
+    min-width: 0;
+    flex: 2 1 320px /* expand on large screen, stack on screen smaller than 300px */
+}
+
+.sub-header-right{
+    flex: 1 1 280px;
+    min-width: 0;
+}
+
+
+/* ---------- LEFT: Title + Abstract ---------- */
+.sub-header-left h1 {
+    font-family: "Playfair Display", serif;
+    font-size: 50px;
+    font-weight: 800;
+    font-style: normal;
+    color: #0D2B80;
+    letter-spacing: -2px;
+}
+
+.sub-header-left p {
+    font-size: 16px;
+    color: #0D2B80;
+}
+
+
+/* ---------- RIGHT: arch card ---------- */
+.arch-card{
+    text-align: center;
+    border: 2px solid #0A1E5C;
+    border-radius: 240px 240px 20px 20px;
+    background-color: #FFECB3;
+    background-image: radial-gradient(#F3CF6B 1.5px, transparent 1.5px);  /* the background dots */
+    background-size: 24px 24px;                 /* space between the dots */
+    box-shadow: 6px 6px 0px #0D2B80;
+    padding: 30px 30px;
+}
+
+.icon-circle{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 74px;
+    height: 74px;
+    margin: 0 auto;
+    border: 2px solid #0D2B80;
+    border-radius: 50%;
+    background-color: #FFFFFF;
+    font-size: 38px;
+}
+
+
+.arch-img{
+    width: 36px;
+}
+
+.arch-card h2{
+    font-family: "Playfair Display", serif;
+    font-size: 24px;
+    font-weight: bold;
+    color: #0D2B80;
+}
+
+.arch-card p{
+    font-size: 11px;
+    color: #0D2B80;
+}
+
+
+
+
+/* ============================================================
+   KPI CARD SECTION
+============================================================ */
+.kpi-card {
+    padding: 40px 30px;
+}
+
+.stats-box {
+    text-align: center;
+    padding: 30px 20px;
+    margin: 0 8px;
+    border: 2px solid #0D2B80;
+    border-radius: 24px;
+    background-color: #FFFFFF;
+}
+
+.stats-number {
+    font-family: "Playfair Display", serif;
+    font-size: 28px;
+    font-weight: bold;
+    color: #0D2B80;
+}
+
+.stats-label {
+    font-size: 14px;
+    font-weight: 600;
+    color: rgba(12, 43, 128, 0.80);
+}
+
+
+
+
+/* ============================================================
+   CHART
+============================================================ */
+/* ---------- SECTION CONTAINER ---------- */
+.section {
+    padding: 40px 30px;
+}
+
+.section-title {
+    font-family: "Playfair Display", serif;      
+    font-size: 30px;
+    font-weight: bold;
+    color: #0D2B80;                            
+    line-height: 1.25; 
+    margin-bottom: 8px;
+    padding-left: 10px;
+
+}
+
+.section-text {
+    font-family: "Plus Jakarta Sans", sans-serif; 
+    font-size: 14px;
+    color: rgba(13, 43, 128, 0.8);
+    border-bottom: 2px solid #0D2B80; 
+    padding-bottom: 10px;
+    padding-left: 10px;
+}
+
+/* Two boxes side by side on normal screens, one per row on small screens */
+.pure-u-1, .pure-u-md-1-2 {
+    padding: 10px;          /* space around each box */
+    box-sizing: border-box; /* padding stays inside the width, no overflow */
+}
+
+.chart-row > [class*="pure-u"]{   /* select each Pure css column inside the chart row */
+    display: flex;                /* let the chart card fill the column */
+    align-items: stretch;         /* make the column content the same height */ 
+}
+
+
+.chart-row .chart-card{
+    width: 100%;                /*  make the chard card fill its column */
+    box-sizing: border-box;     /* include padding and border within the card's width */ 
+}
+
+
+.chart-card{
+    padding: 20px 24px;
+    margin: 4px;
+    border: 2px solid #0D2B80;
+    border-radius: 16px;
+    background-color: #FFFFFF;
+    overflow: hidden;           /* clips everything that extends beyond the chart card's edges */
+    box-shadow: 0 12px 24px rgba(13, 43, 128, 0.06);
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+
+.chart-card:hover{
+    transform: translateY(-4px);                            /*  float up animation when hover to the chard card */
+    box-shadow: 0 12px 24px rgba(13, 43, 128, 0.14);
+}                                                               
+
+
+.chart-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 24px;
+    border-bottom: 1px solid #D5D9E8;
+}
+
+.chart-title{
+    font-family: "Playfair Display", serif;
+    font-size: 18px;
+    font-weight: 800;
+    color: #0D2B80;
+    letter-spacing: -0.5px;
+    margin-top: 3px;
+    margin-bottom: 10px;
+}
+
+.chart-tag{
+    font-size: 10px;
+    font-weight: bold;
+    color: #0D2B80;
+    background-color: #FFD54F;
+    border: 2px solid #0D2B80;
+    border-radius: 8px;
+    padding: 2px 10px;
+
+}
+
+.chart-text {
+    font-size: 13px;
+    font-weight: 400;
+    color: rgba(13, 43, 128, 0.8)   /* navy, slightly see-through */
+}
+
+.chart{
+    min-height: 300px;
+    width: 100%;
+    max-width: 100%;
+    margin-top: 12px;
+}
+
+
+
+
+/* ============================================================
+  FLOW
+============================================================ */
+.flow-card {
+    width: 100%;
+    padding: 30px 20px;
+    margin: 0;
+    text-align: center;
+    border-top: 2px solid #0D2B80;
+    border-bottom: 2px solid #0D2B80;
+    background-color: #FFECB3;
+    background-image: radial-gradient(#F3CF6B 1.5px, transparent 1.5px); /* the background dots */
+    background-size: 24px 24px;
+}
+
+.flow-title {
+   font-family: "Playfair Display", serif;
+   font-size: 28px;
+   font-weight: bold;
+   color: #0D2B80;
+   margin-bottom: 22px;
+}
+
+.flow-inner {
+   display: flex;
+   flex-wrap: wrap;
+   justify-content: center;
+   align-items: center;
+   gap: 12px 16px;
+}
+
+.flow-pill {
+    padding: 10px 20px;
+    font-size: 14px;
+    font-weight: 800;
+    letter-spacing: 0.5px;
+    color: #0D2B80;
+    text-align: center;
+    text-decoration: none;
+    border: 2.5px solid #0D2B80;
+    border-radius: 30px;
+    box-shadow: 4px 4px 0px #0D2B80;    /* gold shadow at the bottom right */
+    background-color: #FFFFFF;
+}
+
+.current{
+    background-color: #FAE18F;         
+}
+
+.arrow{
+    color: #0D2B80;
+    font-size: 14px;
+    font-weight: 800;
+}
+
+
+
+/* ============================================================
+  FOOTER
+============================================================ */
+.footer-card {  
+    display: flex;                           /* text on the left, button on the right */
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+    margin-top: 40px;                        /* space between cycle and footer */
+    padding: 30px 40px;
+    border-top: 2px solid #0D2B80;
+    background-color: #FAE18F;         
+
+}
+
+.footer-text{
+    text-align: left;                       /* ensure text stay left align */
+}
+
+.footer-text h2{
+    font-family: "Playfair Display", serif;
+    font-size: 18px;
+    font-weight: 800;
+    color: #0D2B80;
+    margin-bottom: 12px;
+}
+
+.footer-text p{
+    font-size: 13px;
+    font-weight: 200;
+    color: #0D2B80;
+    margin: 4px 0;
+}
+
+.footer-text a{
+    font-size: 12px;
+    font-weight: 500;
+    color: rgba(13, 43, 128, 0.8);
+}
