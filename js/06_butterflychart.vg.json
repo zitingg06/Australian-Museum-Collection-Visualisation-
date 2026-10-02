@@ -1,0 +1,87 @@
+{
+    "$schema":"https://vega.github.io/schema/vega-lite/v5.json",
+    "data": {
+        "url": "https://raw.githubusercontent.com/zitingg06/Australian-Museum-Collection-Visualisation-/refs/heads/main/data/commemorative_coins_stamps.csv"
+    },
+    "width": "container",
+    "height": 300,
+    "transform": [
+        {"filter": "(datum.type == 'Coin' || datum.type == 'Stamp') && isValid(datum.theme)"},
+        {
+            "aggregate": [{"op": "count", "as": "records"}],
+            "groupby": ["theme", "type"]
+        },
+        {
+            "joinaggregate": [{"op": "sum", "field": "records", "as": "type_total"}],
+            "groupby" : ["type"]
+        },
+        {
+            "joinaggregate": [{"op": "sum", "field": "records", "as": "theme_total"}],
+            "groupby" : ["theme"]
+        },
+        {"calculate": "datum.records / datum.type_total * 100", "as": "share"},
+        {
+            "calculate": "datum.type == 'Coin' ? -datum.share: datum.share",
+            "as" : "signed_share"
+        }
+    ],
+    "layer": [
+        { 
+            "mark": {
+                "type": "bar", 
+                "cornerRadius": 3,
+                "stroke": "#000000",
+                "strokeWidth": 2,
+                "tooltip": true
+            },
+            "encoding": {
+                "x": {
+                    "field": "signed_share",
+                    "type": "quantitative",
+                    "title": "Coin share (%)    |    Stamp share (%)"
+                },
+                "y": {
+                    "field": "theme",
+                    "type": "nominal",
+                    "title": "Commemorative theme"
+                },
+                "color": {
+                    "field": "type",
+                    "type": "nominal",
+                    "title": "Issue type",
+                    "scale": {
+                        "domain": ["Stamp", "Coin"],
+                        "range": ["#4A5567", "#1A33A0"]
+                    }
+                },
+                "tooltip": [
+                    {"field": "theme", "type": "nominal", "title": "Theme"},
+                    {"field": "type", "type": "nominal", "title": "Issue type"},
+                    {"field": "share", "type": "quantitative", "title": "Share of type (%)", "format": ".1f"},
+                    {"field": "records", "type": "quantitative", "title": "Issue records", "format": ",.0f"}
+                ]
+            }
+        },
+        {
+            "mark": {"type": "rule", "color": "#FFFFFF", "strokeWidth": 1.5},
+            "encoding": {"x": {"datum": 0}}
+        }
+    ],
+    "config": {
+        "view": {"stroke": null},
+        "axis": {
+             "titleFont": "Plus Jakarta Sans",
+            "titleFontWeight": "bold",
+            "titlePadding": 12,
+            "labelFont": "Plus Jakarta Sans",
+            "labelFontSize": 10,
+            "labelPadding": 12
+        },
+        "legend":{
+            "orient": "right",
+            "titleFont": "Playfair Display", "titleFontWeight": "bold",  "titleFontSize": 13, "titleColor":"#0D2B80",
+            "labelFont": "Plus Jakarta Sans", "labelFontSize": 11, "labelColor":"#0D2B80",
+            "symbolSize": 200, "symbolStrokeWidth": 2
+        }
+    }
+}

@@ -1,0 +1,68 @@
+{
+    "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+    "width": "container",
+    "height": 300,
+    "projection": {"type": "mercator"},
+    "data": {
+        "url": "https://raw.githubusercontent.com/zitingg06/Australian-Museum-Collection-Visualisation-/refs/heads/main/data/nma_production_places.csv"
+    },
+    "transform": [
+        {
+            "filter": "datum.location_scope == 'Australia' && isValid(datum.state_from_place_name) && datum.state_from_place_name != ''"
+        },
+        {
+            "aggregate": [{ "op": "count", "as": "place_records"}], 
+            "groupby": ["state_from_place_name"]
+        },
+        {
+            "joinaggregate": [{"op": "sum", "field": "place_records", "as": "total_records"}]
+        },
+        {
+            "calculate": "datum.place_records / datum.total_records * 100",
+            "as": "% of records"
+        },
+        {
+            "lookup": "state_from_place_name",
+            "from": {
+                "data": {
+                    "url": "https://raw.githubusercontent.com/zitingg06/Australian-Museum-Collection-Visualisation-/refs/heads/main/js/STE_2026_AUST_GDA2020.json",
+                    "format": {
+                        "type": "topojson",
+                        "feature": "STE_2026_AUST_GDA2020"
+                    }
+                },
+                "key": "properties.STE_NAME26"
+            },
+            "as": "geo"
+        }
+    ],
+    "mark": {"type": "geoshape"},
+    "encoding": {
+        "shape": {
+            "field": "geo",
+            "type": "geojson"
+        },
+        "color":{
+            "field": "% of records",
+            "type": "quantitative",
+            "title": "Australia's collectibles (%)",
+            "scale":{
+                "domain": [3, 15, 30, 50],
+                "range": ["#E8ECF7", "#A9B7E0", "#5A6FB8", "#0D2B80"]
+            }
+        },
+         "tooltip": [
+            {"field": "state_from_place_name", "type": "nominal", "title": "State or territory"},
+            {"field": "place_records", "type": "quantitative", "title": "Production-place records", "format": ",.0f"},
+            {"field": "% of records", "type": "quantitative", "title": "% of collectibles", "format": ".1f"}
+        ]
+    },
+    "config":{
+        "view": {"stroke": null},
+        "legend": {
+            "orient": "right",
+            "titleFont": "Playfair Display", "titleFontWeight": "bold", "titleFontSize": 13, "titleColor":"#0D2B80",
+            "labelFont": "Plus Jakarta Sans","labelFontSize": 11, "labelColor":"#0D2B80"
+        }
+    }
+}

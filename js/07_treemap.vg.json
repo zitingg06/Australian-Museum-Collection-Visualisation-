@@ -1,0 +1,83 @@
+{
+    "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+    "width": "container",
+    "height": 300,
+    "data": {
+        "url": "https://raw.githubusercontent.com/zitingg06/Australian-Museum-Collection-Visualisation-/refs/heads/main/data/nma_collections.csv"
+    },
+    "transform":[
+        {
+            "aggregate": [{"op": "count", "as": "records"}],
+            "groupby": ["collection_grouped"]
+        },
+        {
+            "calculate": "datum.collection_grouped === 'Timothy Millett collection' ? 0 : datum.collection_grouped == 'Other Collections' ? 0 : 0.65", 
+            "as": "x"
+        },
+        {
+            "calculate": "datum.collection_grouped === 'Timothy Millett collection' ? 0.63 : datum.collection_grouped == 'Other Collections' ? 0.63 : 1", 
+            "as": "x2"
+        },
+        {
+            "calculate": "datum.collection_grouped == 'Other Collections' ? 0 : datum.collection_grouped === 'Timothy Millett collection' ? 0.72 : datum.collection_grouped === 'Governor-General collection' ? 0 : datum.collection_grouped === 'Gary Whipp collection' ? 0.30 : datum.collection_grouped === 'J B Young Ltd collection' ? 0.30 : datum.collection_grouped === 'ACT Milk Authority collection' ? 0.30 : datum.collection_grouped === 'Cecil Ballard Jnr collection' ? 0.48 : datum.collection_grouped === 'William and Jeanette Derham Family - Bendigo Pottery collection' ? 0.48 : datum.collection_grouped === 'Springfield - Faithfull Family collection' ? 0.78 : datum.collection_grouped === 'David Allen medals collection' ? 0.78 : 0.30 ",
+            "as": "y"
+        },
+        {
+            "calculate": "datum.collection_grouped == 'Other Collections' ? 0.69 : datum.collection_grouped === 'Timothy Millett collection' ? 1.0 : datum.collection_grouped === 'Governor-General collection' ? 0.27 : datum.collection_grouped === 'Gary Whipp collection' ? 0.45 : datum.collection_grouped === 'J B Young Ltd collection' ? 0.45 : datum.collection_grouped === 'ACT Milk Authority collection' ? 0.45 : datum.collection_grouped === 'Cecil Ballard Jnr collection' ? 0.75 : datum.collection_grouped === 'William and Jeanette Derham Family - Bendigo Pottery collection' ? 0.75 : datum.collection_grouped === 'Springfield - Faithfull Family collection' ? 1.0 : datum.collection_grouped === 'David Allen medals collection' ? 1.0 : 0.45 ",
+            "as": "y2"
+        },
+        {
+            "calculate": "datum.collection_grouped == 'Other Collections' ? 0 : datum.collection_grouped === 'Timothy Millett collection' ? 0 : 0.65",
+            "as": "fx"
+        },
+        {
+            "calculate": "datum.collection_grouped == 'Other Collections' ? 0.63 : datum.collection_grouped === 'Timothy Millett collection' ? 0.63 : datum.collection_grouped === 'Gary Whipp collection' ? 0.75 : datum.collection_grouped === 'J B Young Ltd collection' ? 0.86 : datum.collection_grouped === 'Cecil Ballard Jnr collection' ? 0.80 : datum.collection_grouped === 'Springfield - Faithfull Family collection' ? 0.76 : 1.0 ",
+            "as": "fx2"
+        },
+        {
+            "calculate": "datum.collection_grouped == 'J B Young Ltd collection' ? 0.77 : datum.collection_grouped === 'ACT Milk Authority collection' ? 0.88 : datum.collection_grouped === 'William and Jeanette Derham Family - Bendigo Pottery collection' ? 0.82 : datum.collection_grouped === 'David Allen medals collection' ? 0.78 : datum.fx ",
+            "as": "final_fx"
+        }
+    ],
+    "params": [
+        {
+            "name": "group_highlight",
+            "select": {"type": "point", "fields": ["collection_grouped"]},
+            "bind": "legend"
+        }
+    ],
+    "mark": {
+        "type": "rect",
+        "stroke": "white",
+        "strokeWidth": 2
+    },
+    "encoding": {
+        "x": {"field": "final_fx", "type": "quantitative", "axis": null},
+        "x2": {"field": "fx2"},
+        "y": {"field": "y", "type": "quantitative", "axis": null},
+        "y2": {"field": "y2"},
+        "fill": {
+            "field": "collection_grouped",
+            "type": "nominal",
+            "scale": {
+                "range": ["#0B1F5B", "#24478F", "#4F78A8", "#77A6B8", "#A9C7C2", "#E6B93F", "#F2D675", "#D99A32", "#A96F50", "#737F95", "#3C4B63"]
+            },
+            "legend": {
+                "orient": "bottom",
+                "columns": 2,
+                "title": "Collection Group", "titleFont": "Playfair Display", "titleFontWeight": "bold", "titleFontSize": 13, "titleColor":"#0D2B80",
+                "labelFont": "Plus Jakarta Sans", "labelFontSize": 11, "labelColor":"#0D2B80", "labelLimit": 400,
+                "symbolSize": 200, "symbolStrokeWidth": 2
+            }
+        },
+        "opacity": {
+            "condition": {"param": "group_highlight", "value": 1}, 
+            "value": 0.3
+        },
+        "tooltip": [
+            {"field": "collection_grouped", "type": "nominal", "title": "Collection Group"},
+            {"field": "records", "type": "quantitative", "title": "No. of collectibles", "format": ","}
+        ]
+    },
+    "config": {"view": {"stroke": null}}
+}

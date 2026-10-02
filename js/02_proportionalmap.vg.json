@@ -1,0 +1,66 @@
+{
+    "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+    "width": "container",
+    "height": 300,
+    "projection": {
+        "type": "mercator",
+        "center": [134, -27],
+        "scale": 450
+    },
+    "layer":[
+        {
+            "data": {
+                "url": "https://raw.githubusercontent.com/zitingg06/Australian-Museum-Collection-Visualisation-/refs/heads/main/js/STE_2026_AUST_GDA2020.json",
+                "format": {"type": "topojson", "feature": "STE_2026_AUST_GDA2020"}
+            },
+            "transform": [
+                {"filter": "datum.properties.AUS_CODE26 == 'AUS'"}
+            ],
+            "mark":{
+                "type": "geoshape",
+                "fill": "#F4E8C1",
+                "stroke": "white"
+            }
+        },
+        {
+            "data": {
+                "url": "https://raw.githubusercontent.com/zitingg06/Australian-Museum-Collection-Visualisation-/refs/heads/main/data/nma_production_places.csv"
+            },
+            "transform": [
+                {"filter": "datum.location_scope == 'Australia' && isValid(datum.state_from_place_name) && datum.state_from_place_name != ''"},
+                {
+                    "aggregate": [{"op": "count", "as": "place_records"}],
+                    "groupby": ["place_name", "latitude", "longitude"]
+                }
+            ],
+            "mark":{
+                "type": "circle",
+                "filled": true,
+                "color": "#0D2B80",
+                "opacity": 0.75
+            },
+            "encoding": {
+                "longitude": {"field": "longitude","type": "quantitative"},
+                "latitude":{"field": "latitude", "type": "quantitative"},
+                "size":{
+                    "field": "place_records",
+                    "type": "quantitative",
+                    "title": "Production records",
+                    "scale": {"range": [30, 900]}
+                },
+                "tooltip":[
+                    {"field": "place_name", "type": "nominal", "title":"Recorded place"},
+                    {"field": "place_records", "type": "quantitative", "title":"Production records", "format":",.0f"}
+                ]
+            }
+        }
+    ],
+    "config":{
+        "view": {"stroke": null},
+        "legend": {
+            "orient": "right",
+            "titleFont": "Playfair Display", "titleFontWeight": "bold", "titleFontSize": 13, "titleColor":"#0D2B80",
+            "labelFont": "Plus Jakarta Sans","labelFontSize": 11, "labelColor":"#0D2B80"
+        }
+    }
+}
