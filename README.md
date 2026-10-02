@@ -2,4 +2,4 @@
 
 Created by: Zi Ting Mow
 
-Link: https://zitingg06.github.io/Australian-Museum-Collection-Visualisation-/
+Website Link: https://zitingg06.github.io/Australian-Museum-Collection-Visualisation-/
